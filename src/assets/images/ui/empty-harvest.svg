@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320" role="img" aria-label="لا توجد نتائج">
+  <title>لا توجد نتائج</title>
+  <rect width="480" height="320" rx="16" fill="#F2EBDD"/>
+     <ellipse cx="240" cy="210" rx="90" ry="28" fill="#EAF4EC"/>
+     <path d="M240 80 v90" stroke="#173F2A" stroke-width="8"/>
+     <ellipse cx="240" cy="78" rx="50" ry="28" fill="#2F7D4A"/>
+     <text x="240" y="280" text-anchor="middle" fill="#173F2A" font-size="18" font-family="Tahoma">لا توجد عناصر</text>
+</svg>

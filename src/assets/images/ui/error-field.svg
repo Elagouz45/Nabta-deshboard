@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320" role="img" aria-label="خطأ">
+  <title>خطأ</title>
+  <rect width="480" height="320" rx="16" fill="#F2EBDD"/>
+     <circle cx="240" cy="140" r="56" fill="#B42318"/>
+     <text x="240" y="154" text-anchor="middle" fill="#FAF8F3" font-size="48" font-family="Tahoma">!</text>
+     <text x="240" y="250" text-anchor="middle" fill="#173F2A" font-size="18" font-family="Tahoma">تعذر التحميل</text>
+</svg>

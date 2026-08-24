@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="160" viewBox="0 0 240 160" role="img" aria-label="جذر">
+  <title>جذر</title>
+  <rect width="240" height="160" rx="16" fill="#F2EBDD"/>
+       <rect x="70" y="28" width="100" height="64" rx="12" fill="#5A4630"/>
+       <text x="120" y="120" text-anchor="middle" fill="#173F2A" font-size="22" font-family="Tahoma">جذر</text>
+</svg>

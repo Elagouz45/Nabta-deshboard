@@ -1,0 +1,179 @@
+<a class="skip-link" href="#main">{{ 'common.skip' | t }}</a>
+<header class="site-header" [class.scrolled]="ui.headerScrolled()">
+  <div class="app-container main-head">
+    <button class="icon-btn mobile-only" type="button" (click)="openNav()" aria-label="فتح القائمة">
+      <svg lucideMenu [size]="22"></svg>
+    </button>
+    <a routerLink="/" class="logo" [attr.aria-label]="brand.shortNameAr">
+      <app-brand-logo />
+    </a>
+    <app-search-bar class="desktop-only grow" inputId="q" [value]="query" (valueChange)="query = $event" (searched)="onSearched($event)" />
+    <div class="icons">
+      <button class="icon-btn mobile-only" type="button" (click)="ui.searchOpen.set(!ui.searchOpen())" [attr.aria-label]="'nav.search' | t">
+        <svg lucideSearch [size]="22"></svg>
+      </button>
+      <app-account-menu class="header-account" />
+      <a routerLink="/wishlist" class="icon-btn badge-wrap header-extra" [attr.aria-label]="'nav.wishlist' | t">
+        <svg lucideHeart [size]="22"></svg>
+        @if (wishlist.count()) { <span class="count">{{ wishlist.count() }}</span> }
+      </a>
+      <a routerLink="/compare" class="icon-btn badge-wrap header-extra" [attr.aria-label]="'nav.compare' | t">
+        <svg lucideGitCompare [size]="22"></svg>
+        @if (compare.count()) { <span class="count">{{ compare.count() }}</span> }
+      </a>
+      <a routerLink="/cart" class="icon-btn badge-wrap" [attr.aria-label]="'nav.cart' | t">
+        <svg lucideShoppingCart [size]="22"></svg>
+        @if (cart.quantity()) { <span class="count">{{ cart.quantity() }}</span> }
+      </a>
+    </div>
+  </div>
+  @if (ui.searchOpen()) {
+    <div class="mobile-search app-container">
+      <app-search-bar inputId="mq" [value]="query" (valueChange)="query = $event" (searched)="onSearched($event)" />
+    </div>
+  }
+  <nav class="desktop-nav" aria-label="التنقل الرئيسي">
+    <div class="app-container links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{ 'nav.home' | t }}</a>
+      <a routerLink="/shop" routerLinkActive="active">{{ 'nav.shop' | t }}</a>
+      <a routerLink="/crops" routerLinkActive="active">{{ 'nav.crops' | t }}</a>
+      <a routerLink="/companies" routerLinkActive="active">{{ 'nav.companies' | t }}</a>
+      <a routerLink="/academy" routerLinkActive="active">{{ 'nav.academy' | t }}</a>
+      <a routerLink="/crop-assistant" routerLinkActive="active">{{ 'nav.assistant' | t }}</a>
+      <a routerLink="/shop" [queryParams]="{ offersOnly: true }">{{ 'nav.offers' | t }}</a>
+      <a routerLink="/about" routerLinkActive="active">{{ 'nav.about' | t }}</a>
+      <a routerLink="/contact" routerLinkActive="active">{{ 'nav.contact' | t }}</a>
+    </div>
+  </nav>
+</header>
+
+@if (ui.mobileNavOpen()) {
+  <button type="button" class="drawer-backdrop" (click)="ui.mobileNavOpen.set(false)" aria-label="إغلاق القائمة"></button>
+  <aside #drawer class="drawer card" role="dialog" aria-modal="true" aria-label="القائمة" cdkTrapFocus cdkTrapFocusAutoCapture>
+    <header class="drawer-head">
+      <a routerLink="/" class="drawer-logo" (click)="ui.closeOverlays()" [attr.aria-label]="brand.shortNameAr">
+        <app-brand-logo />
+      </a>
+      <button type="button" class="icon-btn" (click)="ui.mobileNavOpen.set(false)" aria-label="إغلاق"><svg lucideX [size]="22"></svg></button>
+    </header>
+    <app-search-bar
+      class="drawer-search"
+      inputId="dq"
+      [value]="query"
+      (valueChange)="query = $event"
+      (searched)="onSearched($event)"
+    />
+    <p class="group">تصفح</p>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="ui.closeOverlays()">{{ 'nav.home' | t }}</a>
+    <a routerLink="/shop" routerLinkActive="active" (click)="ui.closeOverlays()">{{ 'nav.shop' | t }}</a>
+    <a routerLink="/crops" routerLinkActive="active" (click)="ui.closeOverlays()">{{ 'nav.crops' | t }}</a>
+    <a routerLink="/companies" routerLinkActive="active" (click)="ui.closeOverlays()">{{ 'nav.companies' | t }}</a>
+    <a routerLink="/academy" routerLinkActive="active" (click)="ui.closeOverlays()">{{ 'nav.academy' | t }}</a>
+    <a routerLink="/crop-assistant" routerLinkActive="active" (click)="ui.closeOverlays()">{{ 'nav.assistant' | t }}</a>
+    <a routerLink="/shop" [queryParams]="{ offersOnly: true }" (click)="ui.closeOverlays()">{{ 'nav.offers' | t }}</a>
+    <p class="group">حسابك</p>
+    <app-account-menu variant="drawer" />
+    <a routerLink="/wishlist" routerLinkActive="active" (click)="ui.closeOverlays()">
+      <svg lucideHeart [size]="18"></svg>
+      {{ 'nav.wishlist' | t }}
+      @if (wishlist.count()) { <span class="count">{{ wishlist.count() }}</span> }
+    </a>
+    <a routerLink="/compare" routerLinkActive="active" (click)="ui.closeOverlays()">
+      <svg lucideGitCompare [size]="18"></svg>
+      {{ 'nav.compare' | t }}
+      @if (compare.count()) { <span class="count">{{ compare.count() }}</span> }
+    </a>
+    <a routerLink="/cart" routerLinkActive="active" (click)="ui.closeOverlays()">
+      <svg lucideShoppingCart [size]="18"></svg>
+      {{ 'nav.cart' | t }}
+      @if (cart.quantity()) { <span class="count">{{ cart.quantity() }}</span> }
+    </a>
+    <p class="group">المزيد</p>
+    <a routerLink="/about" routerLinkActive="active" (click)="ui.closeOverlays()">{{ 'nav.about' | t }}</a>
+    <a routerLink="/contact" routerLinkActive="active" (click)="ui.closeOverlays()">{{ 'nav.contact' | t }}</a>
+  </aside>
+}
+
+<main id="main">
+  <router-outlet />
+</main>
+
+<nav class="bottom-nav mobile-only" aria-label="تنقل سريع">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><svg lucideHome [size]="20"></svg>{{ 'nav.home' | t }}</a>
+  <a routerLink="/shop" routerLinkActive="active"><svg lucideStore [size]="20"></svg>{{ 'nav.shop' | t }}</a>
+  <a routerLink="/crop-assistant" routerLinkActive="active"><svg lucideSparkles [size]="20"></svg>مساعد</a>
+  <a routerLink="/wishlist" routerLinkActive="active"><svg lucideHeart [size]="20"></svg>{{ 'nav.wishlist' | t }}</a>
+  <app-account-menu variant="tab" />
+</nav>
+
+<footer class="site-footer">
+  <div class="app-container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a routerLink="/" class="footer-logo" [attr.aria-label]="brand.shortNameAr">
+          <app-brand-logo />
+        </a>
+        <p class="tagline">{{ brand.taglineAr }}</p>
+        <ul class="footer-meta">
+          <li>
+            <svg lucideMapPin [size]="16" aria-hidden="true"></svg>
+            <span>{{ brand.addressAr }}</span>
+          </li>
+          <li>
+            <svg lucidePhone [size]="16" aria-hidden="true"></svg>
+            <a [href]="'tel:' + brand.customerServicePhone">{{ brand.customerServicePhone }}</a>
+          </li>
+          <li>
+            <svg lucideClock [size]="16" aria-hidden="true"></svg>
+            <span>{{ brand.workingHoursAr }}</span>
+          </li>
+        </ul>
+        <p class="tax">الرقم الضريبي: {{ brand.taxNumberPlaceholder }}</p>
+      </div>
+      <nav class="footer-col" aria-label="المتجر">
+        <h3>المتجر</h3>
+        <a routerLink="/shop">كل المنتجات</a>
+        <a routerLink="/companies">الشركات</a>
+        <a routerLink="/brands">العلامات</a>
+        <a routerLink="/crops">المحاصيل</a>
+      </nav>
+      <nav class="footer-col" aria-label="خدمة العملاء">
+        <h3>خدمة العملاء</h3>
+        <a routerLink="/contact">تواصل معنا</a>
+        <a routerLink="/faq">الأسئلة الشائعة</a>
+        <a routerLink="/policies/shipping">الشحن</a>
+        <a routerLink="/policies/returns">الإرجاع</a>
+        <a [href]="whatsappHref()" target="_blank" rel="noopener noreferrer">واتساب</a>
+      </nav>
+      <nav class="footer-col footer-policies" aria-label="السياسات">
+        <h3>السياسات</h3>
+        <a routerLink="/policies/privacy">الخصوصية</a>
+        <a routerLink="/policies/terms">الشروط</a>
+        <a routerLink="/policies/payment">الدفع</a>
+        <a routerLink="/policies/cookies">الكوكيز</a>
+      </nav>
+    </div>
+    <p class="copy">© {{ brand.shortNameAr }} — محتوى تجريبي للعرض وليس استشارة زراعية معتمدة.</p>
+  </div>
+</footer>
+
+@if (!cookieDecision) {
+  <div class="cookie card" role="dialog" aria-label="موافقة ملفات الارتباط">
+    <p>{{ 'cookie.message' | t }}</p>
+    <div class="row">
+      <button type="button" class="btn" (click)="acceptCookies('all')">{{ 'cookie.accept' | t }}</button>
+      <button type="button" class="btn secondary" (click)="acceptCookies('essentials')">{{ 'cookie.essentials' | t }}</button>
+    </div>
+  </div>
+}
+
+<a class="wa" [href]="whatsappHref()" target="_blank" rel="noopener noreferrer" aria-label="واتساب">واتساب</a>
+@if (showTop) {
+  <button type="button" class="top" (click)="toTop()" aria-label="العودة للأعلى"><svg lucideChevronUp [size]="20"></svg></button>
+}
+
+<div class="toasts" aria-live="polite">
+  @for (toast of ui.toasts(); track toast.id) {
+    <p class="toast" [class.error]="toast.tone === 'error'">{{ toast.text }}</p>
+  }
+</div>

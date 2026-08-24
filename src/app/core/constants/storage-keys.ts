@@ -1,0 +1,16 @@
+export const STORAGE_KEYS = {
+  guestCart: 'namaa.guest-cart',
+  userCartPrefix: 'namaa.user-cart.',
+  authSession: 'namaa.auth-session',
+  wishlist: 'namaa.wishlist',
+  comparison: 'namaa.comparison',
+  recentlyViewed: 'namaa.recently-viewed',
+  language: 'namaa.language',
+  cookieConsent: 'namaa.cookie-consent',
+  recentSearches: 'namaa.recent-searches',
+  cropAssistant: 'namaa.crop-assistant',
+  catalogView: 'namaa.catalog-view',
+  demoUsers: 'namaa.demo-users',
+  demoCredentials: 'namaa.demo-credentials',
+  demoOrders: 'namaa.demo-orders',
+} as const;

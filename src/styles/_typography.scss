@@ -1,0 +1,35 @@
+:root {
+  --font-body: 'Tajawal', 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  --font-display: 'Alexandria', 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+  --fs-hero: clamp(1.85rem, 3vw, 2.65rem);
+  --fs-page: clamp(1.55rem, 2.2vw, 2.1rem);
+  --fs-section: clamp(1.3rem, 1.7vw, 1.75rem);
+  --fs-card: 1.05rem;
+  --fs-body: 1rem;
+  --fs-helper: 0.875rem;
+  --lh-body: 1.75;
+  --lh-heading: 1.35;
+}
+
+h1,
+h2,
+h3,
+.display {
+  font-family: var(--font-display);
+  line-height: var(--lh-heading);
+  color: var(--color-forest);
+  font-weight: 700;
+  margin: 0 0 0.55em;
+}
+
+h1 {
+  font-size: var(--fs-page);
+}
+
+h2 {
+  font-size: var(--fs-section);
+}
+
+h3 {
+  font-size: var(--fs-card);
+}

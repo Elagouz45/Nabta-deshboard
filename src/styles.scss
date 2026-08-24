@@ -1,1 +1,235 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'colors';
+@use 'spacing';
+@use 'radius';
+@use 'shadows';
+@use 'z-index';
+@use 'transitions';
+@use 'typography';
+@use 'utilities';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: var(--lh-body);
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-brand);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-forest);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 12px;
+  top: -48px;
+  background: var(--color-forest);
+  color: var(--color-white);
+  padding: 8px 14px;
+  border-radius: 8px;
+  z-index: var(--z-skip);
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.app-container {
+  width: min(var(--container), calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.btn,
+button.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-btn);
+  font: inherit;
+  cursor: pointer;
+  background: var(--color-brand);
+  color: var(--color-white);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.btn:hover {
+  background: var(--color-forest);
+  color: var(--color-white);
+}
+
+.btn.secondary {
+  background: var(--color-white);
+  color: var(--color-forest);
+  border-color: var(--color-border-strong);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--color-forest);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.input,
+select,
+textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  padding: 10px 12px;
+  font: inherit;
+  background: var(--color-white);
+  color: var(--color-text);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  background: var(--color-mint);
+  color: var(--color-forest);
+}
+
+.grid-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.section {
+  padding: var(--space-8) 0;
+}
+
+.app-container,
+.page-shell,
+.page-shell main {
+  min-width: 0;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-btn);
+}
+
+.page-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-shell main {
+  flex: 1;
+}
+
+.cdk-global-overlay-wrapper:has(.filter-sheet-pane) {
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cdk-overlay-pane.filter-sheet-pane {
+  width: 100% !important;
+  max-width: 520px;
+  padding: 0;
+}
+
+.cdk-overlay-container:has(.filter-sheet-pane) .cdk-overlay-backdrop {
+  background: rgb(18 58 40 / 0.42);
+}
+
+@media (max-width: 1024px) {
+  .app-container {
+    width: min(var(--container), calc(100% - 24px));
+  }
+  .section {
+    padding: var(--space-6) 0;
+  }
+  .grid-products {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding: var(--space-5) 0;
+  }
+  .grid-products {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://namaa.example.com/</loc></url>
+  <url><loc>https://namaa.example.com/shop</loc></url>
+  <url><loc>https://namaa.example.com/academy</loc></url>
+  <url><loc>https://namaa.example.com/crops</loc></url>
+  <url><loc>https://namaa.example.com/companies</loc></url>
+  <url><loc>https://namaa.example.com/crop-assistant</loc></url>
+  <url><loc>https://namaa.example.com/about</loc></url>
+  <url><loc>https://namaa.example.com/contact</loc></url>
+</urlset>

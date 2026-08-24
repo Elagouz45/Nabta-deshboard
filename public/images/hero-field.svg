@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-label="حقل زراعي عند الفجر">
+  <title>حقل زراعي عند الفجر</title>
+  <rect width="960" height="720" fill="#EAF4EC"/>
+     <rect y="420" width="960" height="300" fill="#173F2A"/>
+     <path d="M0 430 C160 380 280 480 480 400 C680 320 820 430 960 360 L960 720 L0 720 Z" fill="#2F7D4A"/>
+     <circle cx="760" cy="140" r="54" fill="#D99A3D"/>
+     <rect x="120" y="250" width="28" height="180" fill="#24663C"/>
+     <ellipse cx="134" cy="240" rx="40" ry="26" fill="#16794A"/>
+     <rect x="210" y="280" width="22" height="150" fill="#24663C"/>
+     <ellipse cx="221" cy="268" rx="32" ry="20" fill="#2F7D4A"/>
+</svg>
