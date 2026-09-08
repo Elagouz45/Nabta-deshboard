@@ -1,0 +1,4 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+@Component({ selector:'app-procurement-navigation', imports:[RouterLink,RouterLinkActive], changeDetection:ChangeDetectionStrategy.OnPush, template:`<nav aria-label="أقسام المشتريات"><a routerLink="/procurement/suppliers" routerLinkActive="active">الموردون</a><a routerLink="/procurement/purchase-orders" routerLinkActive="active">أوامر الشراء</a><a routerLink="/procurement/receipts" routerLinkActive="active">استلام التوريدات</a></nav>`, styles:[`nav{display:flex;gap:.35rem;padding:.35rem;overflow:auto;border:1px solid var(--border);border-radius:var(--radius);background:#fff}a{flex:0 0 auto;padding:.5rem .85rem;border-radius:.6rem;color:var(--muted);font-size:.78rem;font-weight:600}a.active{background:var(--mint);color:var(--forest);box-shadow:inset 0 -2px var(--brand)}`] })
+export class ProcurementNavigationComponent {}

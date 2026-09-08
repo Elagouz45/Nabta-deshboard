@@ -1,0 +1,3 @@
+export type DiscountType='percentage'|'fixed';export type DiscountStatus='active'|'scheduled'|'expired'|'paused';export interface Discount{readonly id:string;readonly code:string;readonly title:string;readonly type:DiscountType;readonly value:number;readonly used:number;readonly limit:number;readonly startsAt:string;readonly endsAt:string;readonly status:DiscountStatus}
+export interface CreateDiscountRequest{readonly code:string;readonly title:string;readonly type:DiscountType;readonly value:number;readonly minimumOrder:number;readonly usageLimit:number;readonly startsAt:string;readonly endsAt:string;readonly active:boolean}
+export const DISCOUNT_STATUS_LABELS:Record<DiscountStatus,string>={active:'نشط',scheduled:'مجدول',expired:'منتهي',paused:'متوقف'};

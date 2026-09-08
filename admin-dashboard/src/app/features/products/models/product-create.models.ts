@@ -1,0 +1,3 @@
+export type ProductPublicationStatus='draft'|'published';
+export interface CreateProductRequest{readonly nameAr:string;readonly nameEn:string;readonly slug:string;readonly type:'simple'|'variant';readonly shortDescription:string;readonly description:string;readonly category:string;readonly subcategory:string;readonly brand:string;readonly unit:string;readonly packageSize:string;readonly tags:readonly string[];readonly status:ProductPublicationStatus;readonly featured:boolean;readonly visible:boolean;readonly price:number|null;readonly stock:number|null;}
+export interface CreateProductResponse{readonly id:string;readonly slug:string;readonly status:ProductPublicationStatus;}

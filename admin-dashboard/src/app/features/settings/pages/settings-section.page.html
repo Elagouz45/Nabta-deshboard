@@ -1,0 +1,23 @@
+<header class="page-heading"><div><p class="eyebrow">{{ section.eyebrow }}</p><h1>{{ section.title }}</h1><p>{{ section.subtitle }}</p></div><div class="heading-actions"><button class="btn secondary" type="button" (click)="reset()">استعادة الافتراضي</button><button class="btn" type="submit" form="settings-form" [disabled]="form.invalid || form.pristine || store.savingSection() === section.id">حفظ التغييرات</button></div></header>
+<app-settings-navigation />
+@if (store.feedback(); as message) { <div class="feedback" role="status"><span>{{ message }}</span><button type="button" aria-label="إغلاق الرسالة" (click)="store.clearFeedback()">×</button></div> }
+@if (store.isDemo()) { <div class="demo-note">هذه الإعدادات محفوظة محليًا في بيئة العرض حتى يتوفر عقد Laravel المعتمد.</div> }
+<form id="settings-form" [formGroup]="form" (ngSubmit)="save()">
+  @for (card of section.cards; track card.title) {<section class="settings-card"><header><h2>{{ card.title }}</h2><p>{{ card.description }}</p></header><div class="fields">
+    @for (field of card.fields; track field.key) {
+      @if (field.type === 'toggle') {<label class="toggle-field"><span><strong>{{ field.label }}</strong>@if(field.hint){<small>{{ field.hint }}</small>}</span><input type="checkbox" [formControlName]="field.key" /></label>}
+      @else {<label class="field" [class.wide]="field.type === 'textarea'"><span>{{ field.label }}@if(field.required){<b aria-hidden="true"> *</b>}</span>
+        @if (field.type === 'select') {<select [formControlName]="field.key">@for(option of field.options; track option.value){<option [value]="option.value">{{ option.label }}</option>}</select>}
+        @else if (field.type === 'textarea') {<textarea [formControlName]="field.key" rows="3"></textarea>}
+        @else {<input [type]="field.type" [formControlName]="field.key" [min]="field.min ?? null" [max]="field.max ?? null" />}
+        @if(form.controls[field.key].touched && form.controls[field.key].invalid){<small class="error">راجع قيمة هذا الحقل.</small>}
+      </label>}
+    }
+  </div></section>}
+  @if (isMethodsSection()) {<section class="settings-card methods-card"><header><h2>{{ section.id === 'payments' ? 'الوسائل المضافة' : 'شركات وطرق الشحن' }}</h2><p>يمكن تفعيل كل طريقة أو إيقافها دون حذف إعداداتها.</p></header><div class="methods">
+    @for(method of methods(); track method.id){<article><div><strong>{{ method.name }}</strong><p>{{ method.description }}</p></div><button type="button" class="state-button" [class.enabled]="method.enabled" (click)="store.toggleMethod(methodSection(), method.id)">{{ method.enabled ? 'مفعّلة' : 'متوقفة' }}</button></article>}
+    <button class="add-method" type="button" (click)="adding.set(true)">+ إضافة طريقة جديدة</button>
+  </div></section>}
+  <footer class="form-actions"><button class="btn secondary" type="button" (click)="resetForm()">إلغاء التغييرات</button><button class="btn" type="submit" [disabled]="form.invalid || form.pristine">حفظ التغييرات</button></footer>
+</form>
+@if(adding()){<div class="dialog-backdrop" (click)="adding.set(false)"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="method-title" (click)="$event.stopPropagation()"><header><h2 id="method-title">إضافة طريقة جديدة</h2><button type="button" aria-label="إغلاق" (click)="adding.set(false)">×</button></header><label class="field"><span>اسم الطريقة</span><input #methodName /></label><label class="field"><span>وصف مختصر</span><textarea #methodDescription rows="3"></textarea></label><footer><button class="btn secondary" type="button" (click)="adding.set(false)">إلغاء</button><button class="btn" type="button" (click)="addMethod(methodName.value, methodDescription.value)">إضافة الطريقة</button></footer></section></div>}

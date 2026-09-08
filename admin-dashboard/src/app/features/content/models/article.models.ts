@@ -1,0 +1,3 @@
+export type ArticleStatus='draft'|'in_review'|'scheduled'|'published'|'rejected';export interface Article{readonly id:string;readonly title:string;readonly slug:string;readonly summary:string;readonly body:string;readonly category:string;readonly author:string;readonly status:ArticleStatus;readonly updatedAt:string;readonly publishAt:string|null;readonly views:number;readonly featured:boolean}
+export interface ArticleFormValue{readonly title:string;readonly slug:string;readonly summary:string;readonly body:string;readonly category:string;readonly publishAt:string;readonly featured:boolean}
+export const ARTICLE_STATUS_LABELS:Record<ArticleStatus,string>={draft:'مسودة',in_review:'قيد المراجعة',scheduled:'مجدول',published:'منشور',rejected:'مرفوض'};

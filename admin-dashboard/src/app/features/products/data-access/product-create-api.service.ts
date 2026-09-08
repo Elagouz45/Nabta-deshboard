@@ -1,0 +1,2 @@
+import { inject,Injectable } from '@angular/core';import { HttpClient } from '@angular/common/http';import { Observable } from 'rxjs';import { environment } from '../../../../environments/environment';import { CreateProductRequest,CreateProductResponse } from '../models/product-create.models';
+@Injectable() export class ProductCreateApiService{private readonly http=inject(HttpClient);create(payload:CreateProductRequest):Observable<CreateProductResponse>{return this.http.post<CreateProductResponse>(`${environment.apiBaseUrl}/admin/products`,payload);}}

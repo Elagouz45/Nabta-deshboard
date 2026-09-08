@@ -1,0 +1,28 @@
+<main class="product-create" dir="rtl">
+  <header class="page-header">
+    <div><nav aria-label="مسار الصفحة"><a routerLink="/products">المنتجات</a><span>/</span><span>إضافة منتج</span></nav><small>مساحة الإدارة</small><h1>إضافة منتج جديد</h1><p>أدخل بيانات المنتج وصوره وأسعاره ثم راجعها قبل النشر.</p></div>
+    <div class="actions"><a class="button secondary" routerLink="/products">إلغاء</a><button class="button secondary" type="button" (click)="saveDraft()"><svg lucideSave></svg>حفظ كمسودة</button><button class="button primary" type="button" (click)="publish()">نشر المنتج</button></div>
+  </header>
+  <ol class="stepper" aria-label="خطوات إضافة المنتج"><li class="active"><span>1</span>المعلومات الأساسية</li><li><span>2</span>الصور والوسائط</li><li><span>3</span>التسعير</li><li><span>4</span>المخزون</li><li><span>5</span>الخصائص والمتغيرات</li><li><span>6</span>الشحن والظهور</li></ol>
+  <form class="content-layout" [formGroup]="form" (ngSubmit)="publish()">
+    <div class="main-column">
+      <section class="form-card"><h2>المعلومات الأساسية</h2><div class="form-grid two">
+        <label>اسم المنتج بالعربية<input formControlName="nameAr" placeholder="سماد عضوي نباتي" />@if(form.controls.nameAr.touched && form.controls.nameAr.invalid){<small class="error">اسم المنتج مطلوب</small>}</label>
+        <label>اسم المنتج بالإنجليزية (اختياري)<input dir="ltr" formControlName="nameEn" placeholder="Organic Plant Fertilizer" /></label>
+        <label>نوع المنتج<select formControlName="type"><option value="simple">منتج بسيط</option><option value="variant">منتج بمتغيرات</option></select></label>
+        <label>الرابط المختصر<input dir="ltr" formControlName="slug" placeholder="organic-plant-fertilizer" />@if(form.controls.slug.touched && form.controls.slug.invalid){<small class="error">استخدم حروفًا إنجليزية صغيرة وأرقامًا وشرطات فقط</small>}</label>
+      </div><label>وصف مختصر<textarea rows="2" maxlength="160" formControlName="shortDescription" placeholder="وصف قصير يظهر في بطاقات المنتج"></textarea><small class="counter">{{ form.controls.shortDescription.value.length }} / 160</small></label><label>الوصف الكامل<textarea class="editor" rows="5" formControlName="description" placeholder="اكتب تفاصيل المنتج، فوائده وطريقة استخدامه..."></textarea></label></section>
+      <section class="form-card"><h2>التصنيف والتنظيم</h2><div class="form-grid three">
+        <label>التصنيف الرئيسي<select formControlName="category"><option value="">اختر التصنيف</option><option>أسمدة</option><option>مبيدات</option><option>مستلزمات زراعية</option></select></label><label>التصنيف الفرعي<select formControlName="subcategory"><option value="">اختر التصنيف الفرعي</option><option>أسمدة عضوية</option><option>أسمدة ورقية</option></select></label><label>العلامة التجارية<select formControlName="brand"><option value="">اختر العلامة</option><option>نبته</option></select></label><label>وحدة البيع<select formControlName="unit"><option>كجم</option><option>لتر</option><option>قطعة</option></select></label><label>حجم العبوة<select formControlName="packageSize"><option>عبوة</option><option>كيس</option><option>زجاجة</option></select></label><label>الوسوم<input formControlName="tags" placeholder="عضوي، نباتي، تربة" /></label>
+      </div></section>
+      <section class="form-card media-card"><h2>الصور والوسائط</h2><input #imageInput hidden type="file" accept="image/*" multiple (change)="imagesSelected($event)" /><button class="drop-zone" type="button" (click)="chooseImages(imageInput)"><svg lucideImagePlus></svg><strong>اسحب الصور هنا أو اختر من الجهاز</strong><span>PNG أو JPG — بحد أقصى 5 صور</span></button>@if(store.imageUrls().length){<div class="image-grid">@for(image of store.imageUrls();track image){<figure><img [src]="image" alt="معاينة صورة المنتج" />@if($first){<figcaption>الصورة الرئيسية</figcaption>}</figure>}</div>}</section>
+      <section class="form-card"><h2>التسعير والمخزون</h2><div class="form-grid two"><label>السعر (ج.م)<input type="number" min="0" formControlName="price" /></label><label>الكمية الافتتاحية<input type="number" min="0" step="1" formControlName="stock" /></label></div></section>
+    </div>
+    <aside>
+      <section class="side-card"><h2>حالة المنتج</h2><label>الحالة<select formControlName="status"><option value="draft">مسودة</option><option value="published">منشور</option></select></label><label class="toggle-row">منتج مميز<input type="checkbox" formControlName="featured" /><span></span></label><label class="toggle-row">ظاهر في المتجر<input type="checkbox" formControlName="visible" /><span></span></label></section>
+      <section class="side-card preview"><h2>معاينة سريعة</h2><div class="preview-image">@if(store.primaryImage();as image){<img [src]="image" alt="صورة المنتج الرئيسية" />}@else{<svg lucideUpload></svg>}</div><strong>{{ form.controls.nameAr.value || 'اسم المنتج' }}</strong><span>{{ form.controls.category.value || 'التصنيف' }}</span><small>سيضاف السعر في خطوة التسعير</small></section>
+      <section class="side-card completion"><header><h2>اكتمال البيانات</h2><strong>{{ completion() }}%</strong></header><div class="progress"><span [style.width.%]="completion()"></span></div><ul><li [class.done]="form.controls.nameAr.valid && !!form.controls.nameAr.value"><svg lucideCheck></svg>المعلومات الأساسية</li><li [class.done]="store.imageUrls().length > 0"><svg lucideCheck></svg>الصور</li><li [class.done]="form.controls.price.value !== null"><svg lucideCheck></svg>السعر</li><li [class.done]="form.controls.stock.value !== null"><svg lucideCheck></svg>المخزون</li></ul></section>
+    </aside>
+  </form>
+  @if(store.feedback()){<div class="feedback" role="status" aria-live="polite">{{ store.feedback() }}</div>}
+</main>

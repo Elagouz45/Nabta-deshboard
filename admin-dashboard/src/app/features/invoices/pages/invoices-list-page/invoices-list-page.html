@@ -1,0 +1,37 @@
+<main class="invoices-page" dir="rtl">
+  <header class="page-header">
+    <div><p>المبيعات</p><h1>الفواتير</h1><span>راجع الفواتير وحالات التحصيل والتنزيل من مكان واحد.</span></div>
+    <button class="report-button" type="button" [disabled]="store.downloading()" (click)="store.downloadReport()"><svg lucideDownload></svg>{{ store.downloading() ? 'جارٍ التنزيل…' : 'تنزيل التقرير' }}</button>
+  </header>
+
+  @if(store.loading() && !store.page()){
+    <div class="summary-skeleton skeleton"></div><div class="table-skeleton skeleton"></div>
+  }@else{
+    <app-invoice-summary-strip [summary]="store.summary()" />
+    <section class="invoices-surface" aria-labelledby="invoice-results-title">
+      <h2 id="invoice-results-title" class="visually-hidden">قائمة الفواتير</h2>
+      <div class="filters">
+        <label class="search"><span class="visually-hidden">البحث في الفواتير</span><svg lucideSearch></svg><input [formControl]="searchControl" placeholder="ابحث برقم الفاتورة أو الطلب أو اسم العميل"></label>
+        <label><span class="visually-hidden">حالة الدفع</span><select [value]="store.query().paymentStatus" (change)="updateFilter('paymentStatus', $any($event.target).value)"><option value="">حالة الدفع</option><option value="paid">مدفوعة</option><option value="collecting">قيد التحصيل</option><option value="partially_paid">مدفوعة جزئيًا</option><option value="refunded">مستردة</option></select></label>
+        <label><span class="visually-hidden">الفرع</span><select [value]="store.query().branchId" (change)="updateFilter('branchId', $any($event.target).value)"><option value="">جميع الفروع</option>@for(branch of branches;track branch.id){<option [value]="branch.id">{{ branch.name }}</option>}</select></label>
+        <label class="date"><span>من</span><input type="date" [value]="store.query().dateFrom" (change)="updateFilter('dateFrom', $any($event.target).value)"></label>
+        <label class="date"><span>إلى</span><input type="date" [min]="store.query().dateFrom" [value]="store.query().dateTo" (change)="updateFilter('dateTo', $any($event.target).value)"></label>
+        <button class="reset-button" type="button" [disabled]="!store.hasFilters()" (click)="reset()"><svg lucideRotateCcw></svg>إعادة ضبط</button>
+      </div>
+
+      @if(store.error()){
+        <div class="state" role="alert"><strong>تعذر تحميل الفواتير</strong><p>{{ store.error() }}</p><button class="btn secondary" type="button" (click)="retry()">إعادة المحاولة</button></div>
+      }@else if(!store.loading() && store.items().length === 0){
+        <div class="state"><strong>{{ store.hasFilters() ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير حتى الآن' }}</strong><p>{{ store.hasFilters() ? 'جرّب تعديل البحث أو إزالة بعض عوامل التصفية.' : 'ستظهر الفواتير هنا عند إصدارها من الطلبات.' }}</p>@if(store.hasFilters()){<button class="btn secondary" type="button" (click)="reset()">إعادة ضبط الفلاتر</button>}</div>
+      }@else{
+        <div class="table-wrap" [class.refreshing]="store.loading()">
+          <table class="invoices-table" tabindex="-1"><thead><tr><th><button (click)="sort('invoiceNumber')">رقم الفاتورة</button></th><th>رقم الطلب</th><th>العميل</th><th><button (click)="sort('issuedAt')">تاريخ الإصدار</button></th><th><button (click)="sort('total')">الإجمالي</button></th><th><button (click)="sort('paymentStatus')">حالة الدفع</button></th><th>الفرع</th><th>الإجراءات</th></tr></thead>
+            <tbody>@for(invoice of store.items();track invoice.id){<tr><td><a [routerLink]="['/pending/invoices', invoice.id]" class="code">#{{ invoice.invoiceNumber }}</a></td><td><a [routerLink]="['/orders', invoice.orderId]" class="code">#{{ invoice.orderNumber }}</a></td><td>{{ invoice.customerName }}</td><td>{{ invoice.issuedAt | date:'yyyy/MM/dd':'Africa/Cairo' }}</td><td class="amount">{{ invoice.total | currency:'EGP':'symbol':'1.0-0':'ar-EG' }}</td><td><app-invoice-status-badge [status]="invoice.paymentStatus" /></td><td>{{ invoice.branchName }}</td><td><app-delete-action [entityId]="invoice.id" entityType="invoice" [entityLabel]="invoice.invoiceNumber" entityKindLabel="الفاتورة" sourceRoute="/invoices" [snapshot]="invoice" [financialRecord]="true" (deleted)="store.delete(invoice)"/></td></tr>}</tbody>
+          </table>
+          <div class="mobile-list">@for(invoice of store.items();track invoice.id){<article><div class="mobile-title"><a [routerLink]="['/pending/invoices', invoice.id]">#{{ invoice.invoiceNumber }}</a><app-invoice-status-badge [status]="invoice.paymentStatus" /></div><dl><div><dt>الطلب</dt><dd>#{{ invoice.orderNumber }}</dd></div><div><dt>العميل</dt><dd>{{ invoice.customerName }}</dd></div><div><dt>الإجمالي</dt><dd>{{ invoice.total | currency:'EGP':'symbol':'1.0-0':'ar-EG' }}</dd></div><div><dt>الفرع</dt><dd>{{ invoice.branchName }}</dd></div></dl><a class="mobile-view" [routerLink]="['/pending/invoices', invoice.id]">عرض التفاصيل</a></article>}</div>
+        </div>
+        <footer class="pagination"><span>{{ store.rangeLabel() }}</span><div><button type="button" [disabled]="store.query().page === 1" (click)="goToPage(store.query().page - 1)">السابق</button><strong>{{ store.query().page | number:'1.0-0' }}</strong><button type="button" [disabled]="store.query().page === store.totalPages()" (click)="goToPage(store.query().page + 1)">التالي</button></div><span>{{ store.query().perPage }} عناصر في الصفحة</span></footer>
+      }
+    </section>
+  }
+</main>

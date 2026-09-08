@@ -1,0 +1,2 @@
+import { Brand } from '../models/brand.models';
+export const DEMO_BRANDS:readonly Brand[]=[{id:'1',nameAr:'نبته',nameEn:'Nabta',logo:'🌿',productCount:24,order:1,visible:true},{id:'2',nameAr:'جرين لاند',nameEn:'Green Land',logo:'🌱',productCount:18,order:2,visible:true},{id:'3',nameAr:'جذور',nameEn:'Jutho​​or',logo:'🌳',productCount:12,order:3,visible:true},{id:'4',nameAr:'حصاد',nameEn:'Hassad',logo:'🌾',productCount:8,order:4,visible:true},{id:'5',nameAr:'أجرو لايف',nameEn:'Agro Life',logo:'🍃',productCount:0,order:5,visible:false}];

@@ -1,0 +1,3 @@
+export type StaffStatus='active'|'invited'|'inactive';export interface StaffUser{readonly id:string;readonly name:string;readonly email:string;readonly mobile:string;readonly role:string;readonly branch:string;readonly status:StaffStatus;readonly lastSeen:string}
+export interface TeamRole{readonly id:string;readonly name:string;readonly description:string;readonly usersCount:number;readonly permissions:readonly string[];readonly protected:boolean}
+export interface ActivityEntry{readonly id:string;readonly employee:string;readonly action:string;readonly module:string;readonly entity:string;readonly branch:string;readonly occurredAt:string;readonly description:string}

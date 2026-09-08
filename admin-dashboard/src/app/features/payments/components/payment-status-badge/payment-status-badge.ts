@@ -1,0 +1,4 @@
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { PaymentStatus, PAYMENT_STATUS_LABELS } from '../../models/payment.models';
+@Component({selector:'app-payment-status-badge',changeDetection:ChangeDetectionStrategy.OnPush,template:`<span class="badge" [class]="'badge badge--'+status()">{{labels[status()]}}</span>`,styles:[`.badge{display:inline-flex;align-items:center;justify-content:center;width:7rem;min-height:1.75rem;padding:.15rem .65rem;border-radius:999px;font-size:.75rem;font-weight:600;white-space:nowrap;background:#eef2ef;color:#526159}.badge--paid{background:#e4f2e8;color:#267148}.badge--pending{background:#fff2d9;color:#a7660e}.badge--failed{background:#fbe5e5;color:#ae3333}.badge--partially_refunded{background:#e3f1eb;color:#34705a}`]})
+export class PaymentStatusBadge{readonly status=input.required<PaymentStatus>();readonly labels=PAYMENT_STATUS_LABELS;}

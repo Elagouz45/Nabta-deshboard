@@ -1,0 +1,13 @@
+import { computed, Injectable, signal } from '@angular/core';
+import { Category, CategoryFilters, CreateCategoryRequest } from '../models/category.models';
+import { DEMO_CATEGORIES } from './categories.demo';
+
+const DEFAULT_FILTERS: CategoryFilters = { search:'',visibility:'all',level:'all' };
+@Injectable() export class CategoriesStore {
+  private readonly categoriesState=signal<readonly Category[]>(DEMO_CATEGORIES); private readonly filtersState=signal(DEFAULT_FILTERS); private readonly drawerOpenState=signal(false); private readonly savingState=signal(false); private readonly feedbackState=signal<string|null>(null);
+  readonly categories=this.categoriesState.asReadonly(); readonly filters=this.filtersState.asReadonly(); readonly drawerOpen=this.drawerOpenState.asReadonly(); readonly saving=this.savingState.asReadonly(); readonly feedback=this.feedbackState.asReadonly();
+  readonly mainCount=computed(()=>this.categoriesState().filter(item=>item.parentId===null).length); readonly childCount=computed(()=>this.categoriesState().filter(item=>item.parentId!==null).length); readonly mainCategories=computed(()=>this.categoriesState().filter(item=>item.parentId===null));
+  readonly filtered=computed(()=>{const f=this.filtersState();const search=f.search.trim().toLocaleLowerCase('ar');return this.categoriesState().filter(item=>(!search||item.name.toLocaleLowerCase('ar').includes(search))&&(f.visibility==='all'||item.visible===(f.visibility==='visible'))&&(f.level==='all'||(f.level==='main'?item.parentId===null:item.parentId!==null)));});
+  setFilters(patch:Partial<CategoryFilters>):void{this.filtersState.update(value=>({...value,...patch}));} openDrawer():void{this.feedbackState.set(null);this.drawerOpenState.set(true);} closeDrawer():void{this.drawerOpenState.set(false);} add(request:CreateCategoryRequest):void{if(this.savingState())return;this.savingState.set(true);const parent=this.categoriesState().find(item=>item.id===request.parentId);this.categoriesState.update(items=>[...items,{id:crypto.randomUUID(),name:request.name,description:parent?'تصنيف فرعي':'تصنيف رئيسي',icon:'♧',productCount:0,order:parent?`${parent.order}.${items.filter(i=>i.parentId===parent.id).length+1}`:String(request.order),visible:request.visible,parentId:request.parentId}]);this.feedbackState.set('تمت إضافة التصنيف في الوضع التجريبي.');this.savingState.set(false);this.closeDrawer();}
+  delete(category:Category):void{this.categoriesState.update(items=>items.filter(item=>item.id!==category.id&&item.parentId!==category.id));this.feedbackState.set('تم نقل التصنيف إلى سلة المهملات لمدة 30 يومًا.');}
+}

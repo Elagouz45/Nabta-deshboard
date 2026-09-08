@@ -1,0 +1,3 @@
+export interface Category { readonly id: string; readonly name: string; readonly description: string; readonly icon: string; readonly productCount: number; readonly order: string; readonly visible: boolean; readonly parentId: string | null; }
+export interface CategoryFilters { readonly search: string; readonly visibility: 'all' | 'visible' | 'hidden'; readonly level: 'all' | 'main' | 'child'; }
+export interface CreateCategoryRequest { readonly name: string; readonly parentId: string | null; readonly slug: string; readonly description: string; readonly order: number; readonly visible: boolean; }

@@ -1,0 +1,1 @@
+import{Routes}from'@angular/router';import{adminGuard}from'../../core/auth.guards';export const MARKETING_ROUTES:Routes=[{path:'',pathMatch:'full',redirectTo:'discounts'},{path:'discounts',canActivate:[adminGuard],title:'الخصومات والكوبونات | نبته',loadComponent:()=>import('./pages/discounts-page/discounts-page').then(m=>m.DiscountsPage)}];
