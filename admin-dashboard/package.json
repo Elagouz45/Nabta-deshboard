@@ -5,6 +5,7 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
+    "build:demo": "ng build --configuration=production-demo",
     "test": "ng test",
     "lint": "eslint src --max-warnings=0"
   },
